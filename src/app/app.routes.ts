@@ -1,3 +1,14 @@
-import { Routes } from '@angular/router';
+// src/app/app.routes.ts
 
-export const routes: Routes = [];
+import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component'; // Adjust based on actual component paths
+import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
+export const appRoutes: Routes = [
+  { path: '', component: HomeComponent },  // Default route
+  { path: 'about', component: AboutComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+];

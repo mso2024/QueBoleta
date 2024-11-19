@@ -1,0 +1,49 @@
+/* home.component.scss */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  //background-color: #800080; /* Purple */
+  background: linear-gradient(-1000deg, #800080, #ffd700); /* Purple to Gold */
+
+  padding: 20px;
+}
+
+.logo-container {
+  //background: linear-gradient(-1000deg, #800080, #ffd700); /* Purple to Gold */
+  background-color : #800080;
+  padding: 5px;
+  border-radius: 60%; /* Circular shape */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  border-radius: 50%; /* Make the image circular */
+  object-fit: cover;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-button {
+  padding: 10px 20px;
+  background-color: #800080; /* Gold */
+  //background: linear-gradient(-1000deg, #800080, #ffd700); /* Purple to Gold */
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif  ;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #ffd700; /* Purple on hover */
+  transform: scale(1.05);
+}
