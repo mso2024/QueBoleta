@@ -1,0 +1,13 @@
+<header>
+  <div class="logo-container">
+    <!-- Use RouterLink to navigate to the home page -->
+    <a [routerLink]="['/']">
+      <img class="logo" src="assets/logo.jpg" alt="Logo" />
+    </a>
+  </div>
+  <div class="nav-buttons">
+    <button class="nav-button" [routerLink]="['/about']">About</button>
+    <button class="nav-button" [routerLink]="['/login']">Login</button>
+    <button class="nav-button" [routerLink]="['/register']">Register</button>
+  </div>
+</header>

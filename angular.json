@@ -11,30 +11,29 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "frontend/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/que-boleta",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
+            "index": "frontend/src/index.html",
+            "browser": "frontend/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets",
+              "frontend/src/assets",
               {
-                
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "frontend/src/styles.scss"
             ],
             "scripts": []
           },
@@ -87,14 +86,14 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets",
+              "frontend/src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "frontend/src/styles.scss"
             ],
             "scripts": []
           }
