@@ -1,0 +1,36 @@
+.carousel-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 5rem;
+    padding: 5rem;
+    //background-color: #6a0dad; /* Purple background */
+    background: linear-gradient(-1000deg,#800080,#ffd700);
+  }
+  
+  .carousel-item {
+    flex: 0 0 auto;
+    width: 300px;
+    padding: 1rem;
+    background: #ffd700; /* Gold background */
+    color: #000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    scroll-snap-align: start;
+    text-align: center;
+  
+    h2 {
+      margin: 0.5rem 0;
+      font-size: 1.5rem;
+    }
+  
+    .carousel-details {
+      margin-top: 0.5rem;
+  
+      span {
+        display: block;
+        margin-top: 0.3rem;
+      }
+    }
+  }
+  

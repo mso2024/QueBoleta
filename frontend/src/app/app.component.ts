@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router'; // Import RouterModule
 import { HomeComponent } from './home/home.component'; // Import HomeComponent
 import { HeaderComponent } from './header/header.component';
+
 @Component({
   selector: 'app-root',
   template: `
