@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router'
 import { HeaderComponent } from '../header/header.component';
 import { CarouselComponent } from '../carousel/carousel.component';
+import { SearchComponent } from '../search/search.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [RouterModule,HeaderComponent,CarouselComponent]
+  imports: [RouterModule,HeaderComponent,CarouselComponent,SearchComponent]
 })
 export class HomeComponent {
   constructor(private router: Router) {}

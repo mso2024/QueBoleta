@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/connection');
+const db = require('../db/connection');  // Your database connection
 
-// Endpoint to fetch all events with their dates and locations
+// Endpoint to fetch events
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       LEFT JOIN fechas f ON e.event_id = f.event_id
       ORDER BY f.fecha_hora_inicio ASC
     `);
-    res.json(rows);
+    res.json(rows);  // Return events as JSON
   } catch (error) {
     console.error('Error fetching events:', error);
     res.status(500).json({ error: 'Internal server error' });
