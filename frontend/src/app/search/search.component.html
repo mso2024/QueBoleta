@@ -12,8 +12,8 @@
         <div *ngFor="let event of filteredEvents" class="event-item">
           <h3>{{ event.event_name }}</h3>
           <p>{{ event.event_description }}</p>
-          <span><strong>Location:</strong> {{ event.location }}</span>
-          <span><strong>Start:</strong> {{ event.start_time | date: 'medium' }}</span>
+          <span><strong>Location:</strong> {{ event.location }}</span><br>
+          <span><strong>Start:</strong> {{ event.start_time | date: 'medium' }}</span><br>
           <span><strong>End:</strong> {{ event.end_time | date: 'medium' }}</span>
         </div>
       </div>
