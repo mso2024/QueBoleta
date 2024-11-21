@@ -1,0 +1,56 @@
+/* src/app/login/login.component.css */
+
+.login-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    //margin: 100px;
+    padding: 20px;
+    background: linear-gradient(-1000deg,#800080,#ffd700);
+    border-radius: 8px;
+  }
+  
+  h2 {
+    
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  form div {
+    margin-bottom: 15px;
+    width: 50%;
+  }
+  
+  input {
+    padding: 8px;
+    width: 100%;
+    
+  }
+  
+  button {
+    padding: 10px;
+    background-color: gold;
+    color: black;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: purple;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+  }
+  
