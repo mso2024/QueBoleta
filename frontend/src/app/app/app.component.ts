@@ -1,9 +1,9 @@
 // src/app/app.component.ts
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router'; // Import RouterModule
-import { HomeComponent } from './home/home.component'; // Import HomeComponent
-import { HeaderComponent } from './header/header.component';
-import { CarouselComponent } from './carousel/carousel.component';
+import { HomeComponent } from '../pages/home/home.component'; // Import HomeComponent
+import { HeaderComponent } from '../components/header/header.component';
+import { CarouselComponent } from '../components/carousel/carousel.component';
 @Component({
   selector: 'app-root',
   template: `

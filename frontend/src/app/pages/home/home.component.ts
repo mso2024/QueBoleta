@@ -2,9 +2,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router'
-import { HeaderComponent } from '../header/header.component';
-import { CarouselComponent } from '../carousel/carousel.component';
-import { SearchComponent } from '../search/search.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { CarouselComponent } from '../../components/carousel/carousel.component';
+import { SearchComponent } from '../../components/search/search.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
