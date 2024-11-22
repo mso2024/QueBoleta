@@ -2,7 +2,7 @@
     //max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;
-    background: linear-gradient(-1000deg,#800080,#ffd700);
+    background: linear-gradient(-1000deg,#800080,rgb(0, 0, 151));
     .search-input {
       width: 100%;
       padding: 0.8rem;
@@ -24,7 +24,7 @@
     }
   
     .event-item {
-      background-color: gold;
+      background-color: brown;
       padding: 1rem;
       border-radius: 5px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

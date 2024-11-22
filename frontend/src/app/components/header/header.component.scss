@@ -1,7 +1,7 @@
 /* src/app/header/header.component.scss */
 header {
     //background-color: #4b2e83; /* Purple */
-    background: linear-gradient(-1000deg,#800080,#ffd700);
+    background: linear-gradient(-1000deg,#800080,rgb(0, 0, 151));
     color: white;
     display: flex;
     justify-content: space-between;
@@ -24,22 +24,23 @@ header {
   }
   
   .nav-button {
-    background-color: gold; /* Gold color */
+    //background-color: gray; /* Gold color */
+    background: linear-gradient(1000deg,#800080,rgb(0, 0, 151));
     border: none;
     font-weight: bold;
-    font-style: italic;
+    //font-style: italic;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: purple; /* Text color */
+    color: black; /* Text color */
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease;
   }
   
   .nav-button:hover {
-    background-color: purple; /* Darker purple on hover */
+    background-color: rgb(6, 0, 128); /* Darker purple on hover */
     color: gold;
   }
   

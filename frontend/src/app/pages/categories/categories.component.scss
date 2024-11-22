@@ -1,0 +1,27 @@
+main{
+    display: grid;
+    background: linear-gradient(-1000deg,#800080,rgb(0, 0, 151));
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 16px; 
+    padding: 16px; 
+    div {
+        border: 1px solid #7b00ff; 
+        padding: 16px; 
+        text-align: center; 
+        border-radius: 5%;
+      }
+    div img{
+        border-radius: 5%;
+    }
+      h2 {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 1.5rem; 
+        color: #000000; 
+        margin-bottom: 8px; 
+        text-transform: uppercase;
+        text-decoration: none !important;
+      }
+}
+
+
+

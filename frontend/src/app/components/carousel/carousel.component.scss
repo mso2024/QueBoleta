@@ -5,14 +5,15 @@
     gap: 5rem;
     padding: 5rem;
     //background-color: #6a0dad; /* Purple background */
-    background: linear-gradient(-1000deg,#800080,#ffd700);
+    background: linear-gradient(-1000deg,#800080,rgb(0, 0, 151));
   }
   
   .carousel-item {
     flex: 0 0 auto;
     width: 300px;
     padding: 1rem;
-    background: #ffd700; /* Gold background */
+    background: brown; /* Gold background */
+
     color: #000;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
