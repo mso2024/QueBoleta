@@ -1,12 +1,15 @@
 <app-header></app-header>
-<main class = "event-container">
-    <div *ngFor="let event of events" class="carousel-item">
-        <h2>{{ event.event_name }}</h2>
-        <p>{{ event.event_description }}</p>
-        <div class="carousel-details">
-          <span><strong>Ubicación:</strong> {{ event.location }}</span>
-          <span><strong>Empieza:</strong> {{ event.start_time | date: 'medium' }}</span>
-          <span><strong>Termina:</strong> {{ event.end_time | date: 'medium' }}</span>
-        </div>
-      </div>
-</main>
+<div class="category-events">
+  <h1>Eventos</h1>
+  <div *ngIf="events.length > 0; else noEvents">
+    <ul>
+      <li *ngFor="let event of events">
+        <h2>{{ event.nombre }}</h2>
+        <p>{{ event.descripcion }}</p>
+      </li>
+    </ul> 
+  </div>
+  <ng-template #noEvents>
+    <p>No hay eventos en esta categoría.</p>
+  </ng-template>
+</div>

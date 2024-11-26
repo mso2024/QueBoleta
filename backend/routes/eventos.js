@@ -1,9 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/connection');  // Your database connection
+const db = require('../db/connection'); 
 const jwt = require('jsonwebtoken');
 const verifyRole = require('../middlewares/verifyRole');
-// Endpoint to fetch events
+
+
+router.get('/:cat_name', async (req, res) =>{
+  const {cat_name} = req.params;
+  try{
+    const query = 'SELECT DISTINCT eventos.nombre, eventos.descripcion FROM eventos JOIN categorias_eventos ON eventos.event_id = categorias_eventos.event_id JOIN categorias ON categorias_eventos.cat_id = categorias.cat_id WHERE categorias.nombre = ?'
+    const [results] = await db.execute(query,[cat_name]);
+    res.status(200).json(results);
+  } catch(error){
+    console.error(error);
+    res.status(500).json({message: 'Error'});
+  }
+
+
+});
+
+
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -18,24 +34,21 @@ router.get('/', async (req, res) => {
       LEFT JOIN fechas f ON e.event_id = f.event_id
       ORDER BY f.fecha_hora_inicio ASC
     `);
-    res.json(rows);  // Return events as JSON
+    res.json(rows);  
   } catch (error) {
     console.error('Error fetching events:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// Create a new event - Accessible only to "Organizador" role
 router.post('/schedule', verifyRole('Organizador'), async (req, res) => {
   const { nombre, descripcion, fecha_inicio, fecha_fin, ubicacion, capacidad } = req.body;
 
-  // Validate input
   if (!nombre || !descripcion || !fecha_inicio || !fecha_fin || !ubicacion || !capacidad) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    // Insert new event into the database
     const [result] = await db.query(
       'INSERT INTO eventos (nombre, descripcion) VALUES (?, ?)',
       [nombre, descripcion]
@@ -43,7 +56,6 @@ router.post('/schedule', verifyRole('Organizador'), async (req, res) => {
     
     const event_id = result.insertId;
 
-    // Insert event date
     await db.query(
       'INSERT INTO fechas (event_id, fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion) VALUES (?, ?, ?, ?, ?)',
       [event_id, fecha_inicio, fecha_fin, capacidad, ubicacion]
