@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const verifyRole = require('../middlewares/verifyRole');
 
 
-router.get('/:cat_name', async (req, res) =>{
+router.get('/categories/:cat_name', async (req, res) =>{
   const {cat_name} = req.params;
   try{
     const query = 'SELECT DISTINCT eventos.nombre, eventos.descripcion FROM eventos JOIN categorias_eventos ON eventos.event_id = categorias_eventos.event_id JOIN categorias ON categorias_eventos.cat_id = categorias.cat_id WHERE categorias.nombre = ?'
@@ -23,16 +23,8 @@ router.get('/:cat_name', async (req, res) =>{
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
-      SELECT 
-        e.event_id, 
-        e.nombre AS event_name, 
-        e.descripcion AS event_description, 
-        f.fecha_hora_inicio AS start_time, 
-        f.fecha_hora_fin AS end_time, 
-        f.ubicacion AS location
-      FROM eventos e
-      LEFT JOIN fechas f ON e.event_id = f.event_id
-      ORDER BY f.fecha_hora_inicio ASC
+      SELECT nombre, descripcion FROM eventos;
+    
     `);
     res.json(rows);  
   } catch (error) {
@@ -68,6 +60,18 @@ router.post('/schedule', verifyRole('Organizador'), async (req, res) => {
   }
 });
 
-
+router.get('/events/:event_name', async (req, res) => {
+  const event_name = decodeURIComponent(req.params.event_name);  // Decode the event name
+  console.log('Received event name:', event_name);  // Log the event name to check if it's correct
+  
+  try {
+    const query = 'SELECT fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion FROM fechas JOIN eventos ON fechas.event_id = eventos.event_id WHERE eventos.nombre = ?';
+    const [results] = await db.execute(query, [event_name]);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching event dates' });
+  }
+});
 
 module.exports = router;

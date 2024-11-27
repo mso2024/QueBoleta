@@ -1,12 +1,6 @@
 <div class="carousel-container">
-    <div *ngFor="let event of events" class="carousel-item">
-      <h2>{{ event.event_name }}</h2>
-      <p>{{ event.event_description }}</p>
-      <div class="carousel-details">
-        <span><strong>Ubicación:</strong> {{ event.location }}</span>
-        <span><strong>Empieza:</strong> {{ event.start_time | date: 'medium' }}</span>
-        <span><strong>Termina:</strong> {{ event.end_time | date: 'medium' }}</span>
-      </div>
-    </div>
+  <div *ngFor="let event of events" class="carousel-item">
+    <h2>{{ event.nombre }}</h2>
+    <p>{{ event.descripcion }}</p>
   </div>
-  
+</div>
