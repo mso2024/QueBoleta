@@ -61,16 +61,37 @@ router.post('/schedule', verifyRole('Organizador'), async (req, res) => {
 });
 
 router.get('/events/:event_name', async (req, res) => {
-  const event_name = decodeURIComponent(req.params.event_name);  // Decode the event name
-  console.log('Received event name:', event_name);  // Log the event name to check if it's correct
-  
+  const event_name = decodeURIComponent(req.params.event_name); // Decode the event name
+  console.log(`[DEBUG] Received event_name: ${event_name}`); // Log the received parameter
+
   try {
-    const query = 'SELECT fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion FROM fechas JOIN eventos ON fechas.event_id = eventos.event_id WHERE eventos.nombre = ?';
+    // Log the query and the parameter to verify correctness
+    const query = `
+      SELECT 
+        fecha_hora_inicio, 
+        fecha_hora_fin, 
+        capacidad, 
+        ubicacion 
+      FROM fechas 
+      JOIN eventos ON fechas.event_id = eventos.event_id 
+      WHERE eventos.nombre = ?`;
+    console.log(`[DEBUG] Executing query: ${query} with parameter: ${event_name}`);
+
+    // Execute the query
     const [results] = await db.execute(query, [event_name]);
+    console.log(`[DEBUG] Query results: ${JSON.stringify(results)}`); // Log the query results
+
+    if (results.length === 0) {
+      console.log(`[DEBUG] No results found for event_name: ${event_name}`);
+      return res.status(404).json({ message: 'No data found for the specified event.' });
+    }
+
+    // Respond with the results
     res.status(200).json(results);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching event dates' });
+    // Log the error and respond with a 500 status code
+    console.error(`[ERROR] Error fetching event dates for event_name: ${event_name}`, error);
+    res.status(500).json({ message: 'Internal server error while fetching event dates.' });
   }
 });
 

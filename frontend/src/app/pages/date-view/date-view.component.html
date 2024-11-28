@@ -1,1 +1,19 @@
-<p>date-view works!</p>
+<app-header></app-header>
+
+<div class = "event-dates">
+    <h1>Fechas para {{event_name}}</h1>
+    <div *ngIf="dates.length > 0; else NoDates">
+        <ul>
+            <li *ngFor="let date of dates; let i = index">
+                <p>Fecha # {{i+1}}</p>
+                <p>Fecha/Hora de inicio <br>{{date.fecha_hora_inicio}}</p>
+                <p>Fecha/Hora de finalización <br>{{date.fecha_hora_fin}}</p>
+                <p>Capacidad <br>{{date.capacidad}}</p>
+                <p>Ubicación <br>{{date.ubicacion}}</p>
+            </li>
+        </ul>
+    </div>
+    <ng-template #NoDates>
+        <p>No hay fechas para {{event_name}}</p>
+    </ng-template>
+</div>

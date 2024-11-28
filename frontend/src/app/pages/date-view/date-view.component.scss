@@ -1,0 +1,78 @@
+// Main container to apply the gradient background
+.event-dates {
+    background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151)); // Purple to blue gradient
+    padding: 30px 20px;
+    //border-radius: 8px;  // Smooth border radius for rounded corners
+    color: white;
+    text-align: center;
+    
+    // Title styling for the event name
+    h1 {
+      font-family: 'Trebuchet MS', Arial, sans-serif;
+      font-size: 2rem;
+      color: #ffd700;  // Gold color for the heading
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+  
+    // List container styling
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Create a responsive grid layout
+      grid-gap: 20px; // Space between items
+      padding: 0;
+      list-style: none;
+    }
+  
+    // Each event date container styling
+    li {
+      background-color: rgba(123, 0, 255, 0.8); // Semi-transparent purple background for list items
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  // Subtle shadow effect
+      transition: transform 0.3s ease;  // Smooth transition for hover effect
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      &:hover {
+        transform: scale(1.05); // Slight zoom effect on hover
+      }
+  
+      p {
+        margin: 8px 0;  // Consistent spacing between the paragraphs
+        font-size: 1rem;
+      }
+  
+      /* Styling the first <p> with the index ("Fecha #") */
+      p:first-child {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #ffd700;  // Gold color for the index
+      }
+  
+      /* Add some space below the dates */
+      p:nth-child(2), p:nth-child(3) {
+        font-size: 1rem;
+        color: #ffffff; // White text color for date and time
+      }
+  
+      /* Add special styling for the capacity and location */
+      p:nth-child(4), p:nth-child(5) {
+        font-size: 1rem;
+        font-style: italic;
+        color: #ffcc00;  // Light yellow for capacity and location
+      }
+    }
+  
+    /* Handling the case when no dates are available */
+    ng-template {
+      display: block;
+      font-size: 1.2rem;
+      color: white;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  }
+  
+  

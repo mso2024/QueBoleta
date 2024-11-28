@@ -26,7 +26,7 @@ export class DateViewComponent {
 
   fetchDates(): void {
     const encodedEventName = encodeURIComponent(this.event_name); // Ensure URL encoding
-    this.http.get(`http://localhost:5000/api/eventos/${encodedEventName}`)
+    this.http.get(`http://localhost:5000/api/eventos/events/${encodedEventName}`)
       .subscribe(
         (data: any) => this.dates = data,
         error => console.error('Error fetching events:', error)
