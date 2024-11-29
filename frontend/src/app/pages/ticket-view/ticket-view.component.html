@@ -1,0 +1,25 @@
+<app-header></app-header>
+
+<div class="ticket-info">
+    <h1>Boletos Disponibles para {{event_name}}</h1>
+    <div *ngIf="tickets.length > 0; else noTickets">
+        <div class="ticket-container" *ngFor="let ticket of tickets">
+            <div class="ticket-card">
+                <div class="ticket-header">
+                    <h2>Tipo de Boleto: {{ticket.nombre}}</h2>
+                    <p class="ticket-price">Precio: ${{ticket.precio}}</p>
+                </div>
+
+                <div class="ticket-details">
+                    <p><strong>Descripción:</strong> {{ticket.descripcion}}</p>
+                    <p><strong>Fecha/Hora de inicio:</strong> {{ticket.fecha_hora_inicio}}</p>
+                    <p><strong>Fecha/Hora de fin:</strong> {{ticket.fecha_hora_fin}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noTickets>
+        <p>No hay boletos disponibles para {{event_name}} en esta fecha.</p>
+    </ng-template>
+</div>

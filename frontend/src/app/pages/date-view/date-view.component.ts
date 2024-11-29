@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-date-view',
   standalone: true,
-  imports: [HttpClientModule,HeaderComponent,CommonModule,FormsModule],
+  imports: [HttpClientModule,HeaderComponent,CommonModule,FormsModule,RouterModule],
   templateUrl: './date-view.component.html',
   styleUrl: './date-view.component.scss'
 })

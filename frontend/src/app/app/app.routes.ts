@@ -7,6 +7,7 @@ import { ScheduleEventComponent } from '../components/schedule-event/schedule-ev
 import { CategoriesComponent } from '../pages/categories/categories.component';
 import { EventViewComponent } from '../pages/event-view/event-view.component';
 import { DateViewComponent } from '../pages/date-view/date-view.component';
+import { TicketViewComponent } from '../pages/ticket-view/ticket-view.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },  // Default route
   { path: 'about', component: AboutComponent },
@@ -14,5 +15,6 @@ export const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'categories', component: CategoriesComponent},
   { path: 'categories/:cat_name', component: EventViewComponent},
-  { path: 'events/:event_name', component: DateViewComponent}
+  { path: 'events/:event_name', component: DateViewComponent},
+  { path: 'tickets/:event_name/:date_id', component: TicketViewComponent}
 ];

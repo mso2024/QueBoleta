@@ -15,19 +15,18 @@ export class CarouselComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchEvents(); 
+    this.fetchTopEvents(); 
   }
 
-  fetchEvents(): void {
-    console.log('Fetching events...');  // Add this line to see if the method is called
-    const apiUrl = 'http://localhost:5000/api/eventos';
+  fetchTopEvents(): void {
+    const apiUrl = 'http://localhost:5000/api/stats/top_sale_ranks';
     this.http.get<any[]>(apiUrl).subscribe({
-      next: (data) => {
-        console.log('Fetched events:', data);  // Log the data when received
+      next:(data) =>{
+        console.log('Eventos pulleados: ', data);
         this.events = data;
       },
-      error: (err) => {
-        console.error('Error fetching events:', err);  // Log errors if any
+      error:(error) =>{
+        console.error('Error obteniendo los eventos: ', error);
       },
     });
   }

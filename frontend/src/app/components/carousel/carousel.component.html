@@ -1,6 +1,8 @@
 <div class="carousel-container">
-  <div *ngFor="let event of events" class="carousel-item">
-    <h2>{{ event.nombre }}</h2>
-    <p>{{ event.descripcion }}</p>
+  <h1>Eventos más populares:</h1>
+  <div class="carousel-content">
+    <div *ngFor="let event of events" class="carousel-item">
+      <h2>{{ event.nombre }}</h2>
+    </div>
   </div>
 </div>

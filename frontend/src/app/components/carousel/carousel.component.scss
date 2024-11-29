@@ -1,30 +1,40 @@
 .carousel-container {
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    gap: 5rem;
-    padding: 5rem;
-    //background-color: #6a0dad; /* Purple background */
-    background: linear-gradient(-1000deg,#800080,rgb(0, 0, 151));
-  }
-  
-  .carousel-item {
-    flex: 0 0 auto;
-    width: 300px;
-    padding: 1rem;
-    background: brown; /* Gold background */
+  position: relative; /* Maintain relative positioning for the header and content */
+  display: flex;
+  flex-direction: column; /* Stack header and carousel */
+  gap: 2rem; /* Add space between the header and the carousel */
+  padding: 2rem 5rem;
+  background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151));
 
-    color: #000;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    scroll-snap-align: start;
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #fff; /* Make header visible */
     text-align: center;
-  
-    h2 {
-      margin: 0.5rem 0;
-      font-size: 1.5rem;
-    }
-  
-    
   }
-  
+
+  .carousel-content {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 5rem; /* Space between carousel items */
+    padding: 2rem 0;
+  }
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  width: 300px;
+  padding: 1rem;
+  background: brown; /* Gold background */
+  color: #000;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  scroll-snap-align: start;
+  text-align: center;
+
+  h2 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+  }
+}
