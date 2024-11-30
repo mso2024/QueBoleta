@@ -9,12 +9,12 @@
                     <h2>Tipo de Boleto: {{ticket.nombre}}</h2>
                     <p class="ticket-price">Precio: ${{ticket.precio}}</p>
                 </div>
-
                 <div class="ticket-details">
                     <p><strong>Descripción:</strong> {{ticket.descripcion}}</p>
                     <p><strong>Fecha/Hora de inicio:</strong> {{ticket.fecha_hora_inicio}}</p>
                     <p><strong>Fecha/Hora de fin:</strong> {{ticket.fecha_hora_fin}}</p>
                 </div>
+                <button [routerLink]="['/checkout', ticket.id, userId]">Comprar</button>
             </div>
         </div>
     </div>

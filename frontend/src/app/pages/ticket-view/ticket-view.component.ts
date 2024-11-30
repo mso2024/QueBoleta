@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-ticket-view',
@@ -17,14 +18,21 @@ export class TicketViewComponent {
   event_name!: string;
   date_id!: any;
   tickets: any[] = [];
+  userId!: string;  // Definir el userId aquí
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.event_name = params['event_name'];
       this.date_id = params['date_id'];
+      this.userId = localStorage.getItem('user_id') || ''; 
+      if(!this.userId){
+        this.router.navigate(['/login']);
+        return;
+      }
       console.log('Event name/date_id from route:', this.event_name, '/', this.date_id);  
+      console.log('User ID:', this.userId);  // Verificar el userId
       this.fetch_tickets();
     });
   }
