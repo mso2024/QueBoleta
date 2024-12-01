@@ -4,6 +4,18 @@ const db = require('../db/connection');
 const jwt = require('jsonwebtoken');
 
 
+router.get('/getTicketDetails/:ticket_id', async (req, res) =>{
+    const {ticket_id} = req.params;
+    try{
+        const query = 'SELECT * FROM tipo_boletas WHERE ticket_id = ?';
+        const [results] = await db.execute(query,[ticket_id]);
+        res.status(200).json(results);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({message: 'Error'});
+    }
+});
+
 router.post('/checkout/:ticket_id/:user_id', async (req, res) =>{
     const {user_id,ticket_id} = req.params;
     try{
@@ -39,3 +51,5 @@ router.post('/checkout/:ticket_id/:user_id', async (req, res) =>{
         res.status(500).json(error);
     }
 });
+
+

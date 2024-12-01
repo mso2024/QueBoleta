@@ -7,40 +7,39 @@ const db = require('../db/connection');
 const secretKey = 'your_secret_key'; 
 
 router.post('/register', async (req, res) => {
-  const { nombre, apellido, balance, rol, email, pwd } = req.body;
+  const { nombre, apellido, balance, rol, email, pwd } = req.body;  // Cambié 'password' por 'pwd'
 
- 
-  if (!nombre || !apellido || !rol || !email || !pwd) {
-    return res.status(400).json({ error: 'All fields are required' });
+  if (!nombre || !apellido || !rol || !email || !pwd || (balance === undefined || isNaN(balance))) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios y balance debe ser un número válido' });
   }
 
   try {
-  
+    // Verificar si el email ya está registrado
     const [existingUser] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
     if (existingUser.length > 0) {
-      return res.status(400).json({ error: 'Email already registered' });
+      return res.status(400).json({ error: 'El correo electrónico ya está registrado' });
     }
 
-    const hashedPassword = await bcrypt.hash(pwd, 10);
+    // Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(pwd, 10);  // Usamos 'pwd' aquí también
 
-
+    // Insertar el nuevo usuario
     const [result] = await db.query(
       'INSERT INTO usuarios (nombre, apellido, balance, rol, email, pwd) VALUES (?, ?, ?, ?, ?, ?)',
-      [nombre, apellido, balance || 0, rol, email, hashedPassword]
+      [nombre, apellido, balance, rol, email, hashedPassword]
     );
 
-    console.log('Insert result:', result);
-
     if (result.affectedRows > 0) {
-      res.status(201).json({ message: 'User registered successfully' });
+      res.status(201).json({ message: 'Usuario registrado exitosamente' });
     } else {
-      res.status(500).json({ error: 'Failed to register user' });
+      res.status(500).json({ error: 'Error al registrar el usuario' });
     }
   } catch (error) {
-    console.error('Error during registration:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Error durante el registro:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+
 
 
 router.post('/login', async (req, res) => {

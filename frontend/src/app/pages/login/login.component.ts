@@ -17,7 +17,7 @@ export class LoginComponent {
   error_msg: string = '';
   constructor(private router: Router, private http: HttpClient) { }
   login() {
-    this.http.post<any>('http://localhost:5000/api/auth/login',{email: this.email,password: this.password})
+    this.http.post<any>('http://localhost:5000/api/auth/login',{email: this.email,pwd: this.password})
       .subscribe({
         next:(response) =>{
           localStorage.setItem('token',response.token);

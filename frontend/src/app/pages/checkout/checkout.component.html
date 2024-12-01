@@ -1,1 +1,26 @@
-<p>checkout works!</p>
+<app-header></app-header>
+
+<div class="checkout-info">
+  <h1>Confirmar Compra</h1>
+  <div class="ticket-summary">
+    <h2>{{ ticketDetails.nombre }}</h2>
+    <p><strong>Precio:</strong> ${{ ticketDetails.precio }}</p>
+    <p><strong>Descripción:</strong> {{ ticketDetails.descripcion }}</p>
+    <p><strong>Fecha/Hora de inicio:</strong> {{ ticketDetails.fecha_hora_inicio }}</p>
+    <p><strong>Fecha/Hora de fin:</strong> {{ ticketDetails.fecha_hora_fin }}</p>
+  </div>
+  <div class="user-balance">
+    <p><strong>Saldo disponible:</strong> ${{ userFunds }}</p>
+  </div>
+  <div *ngIf="userFunds >= ticketDetails.precio; else insufficientFunds">
+    <p>Confirma tu compra haciendo clic en el botón a continuación.</p>
+    <div class="actions">
+      <button (click)="confirmPurchase()" class="confirm-button">Confirmar Compra</button>
+      <button (click)="cancelPurchase()" class="cancel-button">Cancelar</button>
+    </div>
+  </div>
+  <ng-template #insufficientFunds>
+    <p class="error">Saldo insuficiente para realizar esta compra.</p>
+    <button (click)="cancelPurchase()" class="cancel-button">Volver</button>
+  </ng-template>
+</div>
