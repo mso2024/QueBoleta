@@ -1,13 +1,13 @@
 <app-header></app-header>
 
-<div class="checkout-info">
+<div class="checkout-info" *ngIf="ticketDetails && ticketDetails.nombre; else noTicketDetails">
   <h1>Confirmar Compra</h1>
   <div class="ticket-summary">
     <h2>{{ ticketDetails.nombre }}</h2>
     <p><strong>Precio:</strong> ${{ ticketDetails.precio }}</p>
     <p><strong>Descripción:</strong> {{ ticketDetails.descripcion }}</p>
-    <p><strong>Fecha/Hora de inicio:</strong> {{ ticketDetails.fecha_hora_inicio }}</p>
-    <p><strong>Fecha/Hora de fin:</strong> {{ ticketDetails.fecha_hora_fin }}</p>
+    <!--<p><strong>Fecha/Hora de inicio:</strong> {{ ticketDetails.fecha_hora_inicio }}</p>-->
+    <!--<p><strong>Fecha/Hora de fin:</strong> {{ ticketDetails.fecha_hora_fin }}</p>-->
   </div>
   <div class="user-balance">
     <p><strong>Saldo disponible:</strong> ${{ userFunds }}</p>
@@ -19,8 +19,13 @@
       <button (click)="cancelPurchase()" class="cancel-button">Cancelar</button>
     </div>
   </div>
-  <ng-template #insufficientFunds>
-    <p class="error">Saldo insuficiente para realizar esta compra.</p>
-    <button (click)="cancelPurchase()" class="cancel-button">Volver</button>
-  </ng-template>
 </div>
+
+<ng-template #noTicketDetails>
+  <p class="error">No se pudieron cargar los detalles del boleto. Verifica la URL o intenta nuevamente.</p>
+</ng-template>
+
+<ng-template #insufficientFunds>
+  <p class="error">Saldo insuficiente para realizar esta compra, por favor recargue.</p>
+  <button (click)="cancelPurchase()" class="cancel-button">Volver</button>
+</ng-template>

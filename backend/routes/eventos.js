@@ -22,7 +22,7 @@ router.get('/categories/:cat_name', async (req, res) =>{
 router.get('/tickets/:event_name/:date_id', async (req, res) => {
   const { event_name, date_id } = req.params;
   try {
-    const query = 'SELECT fecha_hora_inicio, fecha_hora_fin, eventos.nombre, tipo_boletas.nombre, tipo_boletas.descripcion, tipo_boletas.precio FROM tipo_boletas JOIN fechas ON tipo_boletas.date_id = fechas.date_id JOIN eventos ON fechas.event_id = eventos.event_id WHERE eventos.nombre = ? AND fechas.date_id = ?';
+    const query = 'SELECT * FROM tipo_boletas JOIN fechas ON tipo_boletas.date_id = fechas.date_id JOIN eventos ON fechas.event_id = eventos.event_id WHERE eventos.nombre = ? AND fechas.date_id = ?';
     const [result] = await db.execute(query, [event_name, date_id]);
     if (result.length > 0) {
       res.status(200).json(result);
