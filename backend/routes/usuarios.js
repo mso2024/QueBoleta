@@ -44,6 +44,7 @@ router.get('/getUserTickets/:user_id', async (req, res) =>{
 
 router.get('/getUserPaymentMethods/:user_id', async (req, res) =>{
     const {user_id} = req.params;
+    
     try{
         const query = 'SELECT * FROM metodos_pago WHERE user_id = ?';
         const [results] = await db.execute(query,[user_id]);
@@ -58,9 +59,10 @@ router.post('/updateUserBalance/:user_id/:am/:pm', async (req, res) =>{
     const {user_id} = req.params;
     const {am} = req.params;
     const {pm} = req.params;
+
     try{
-        const query = 'UPDATE usuarios SET balance = balance + ? WHERE user_id = ?';
-        const [results] = await db.execute(query,[am,user_id]);
+        const query = 'UPDATE usuarios SET balance = balance + ? WHERE user_id = ? AND balance + ? >= 0';
+        const [results] = await db.execute(query,[am,user_id,am]);
         res.status(200).json(results);
 
     }catch(error){
