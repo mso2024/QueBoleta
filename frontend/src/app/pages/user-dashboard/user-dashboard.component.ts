@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { HeaderComponent } from '../../components/header/header.component';
 interface Recibo {
   id_recibo: number;
   id_entrada: number;
@@ -16,10 +16,10 @@ interface Recibo {
 }
 
 interface Tiquete {
-  ticket_id: number;
-  id_cliente: number;
-  id_entrada: number;
-  fecha_compra: string;
+  event_nombre: string; 
+  event_descripcion: string; 
+  ticket_nombre: string; 
+  fecha_compra: string; 
 }
 
 interface MetodoPago {
@@ -32,7 +32,7 @@ interface MetodoPago {
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [HttpClientModule, RouterModule,FormsModule,CommonModule],
+  imports: [HttpClientModule, RouterModule, FormsModule, CommonModule, HeaderComponent],
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss'],
 })
@@ -67,10 +67,14 @@ export class UserDashboardComponent implements OnInit {
     this.http
       .get<Tiquete[]>(`http://localhost:5000/api/usuarios/getUserTickets/${this.user_id}`)
       .subscribe(
-        (data) => (this.tiquetes = data),
+        (data) => {
+          console.log('Fetched Tickets:', data); // Log the data
+          this.tiquetes = data;
+        },
         (error) => console.error('Error fetching tiquetes: ', error)
       );
   }
+  
 
   fetchMetodosPago(): void {
     this.http

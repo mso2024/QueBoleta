@@ -1,50 +1,52 @@
-<div class="checkout-info">
-    <h1>Mi Dashboard</h1>
-  
-    <!-- Tickets Carousel -->
-    <div class="carousel-container">
-      <h2>Tus Tickets</h2>
-      <div class="carousel-content">
-        <div *ngFor="let ticket of tiquetes" class="carousel-item">
-          <h3>Ticket ID: {{ ticket.ticket_id }}</h3>
-          <p>Fecha de compra: {{ ticket.fecha_compra }}</p>
+  <app-header></app-header>
+  <div class="user-info">
+      <h1>Mi Dashboard</h1>
+    
+      <!-- Tickets Carousel -->
+      <div class="carousel-container">
+        <h2>Tus Tickets</h2>
+        <div class="carousel-content">
+          <div *ngFor="let ticket of tiquetes" class="carousel-item">
+            <h3>Nombre del evento: <br>{{ ticket.event_nombre }}</h3>
+            <p>Tipo de boleta: {{ticket.ticket_nombre}}</p>
+            <p>Fecha de compra: {{ ticket.fecha_compra }}</p>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <!-- Receipts Carousel -->
-    <div class="carousel-container">
-      <h2>Mis Recibos</h2>
-      <div class="carousel-content">
-        <div *ngFor="let recibo of recibos" class="carousel-item">
-          <h3>Recibo ID: {{ recibo.id_recibo }}</h3>
-          <p>Tipo de transacción: {{ recibo.tipo_transaccion }}</p>
-          <p>Monto: ${{ recibo.monto }}</p>
-          <p>Estado: {{ recibo.estado_transaccion }}</p>
+    
+      <!-- Receipts Carousel -->
+      <div class="carousel-container">
+        <h2>Mis Recibos</h2>
+        <div class="carousel-content">
+          <div *ngFor="let recibo of recibos" class="carousel-item">
+            <h3>Recibo ID: {{ recibo.id_recibo }}</h3>
+            <p>Tipo de transacción: {{ recibo.tipo_transaccion }}</p>
+            <p>Monto: ${{ recibo.monto }}</p>
+            <p>Estado: {{ recibo.estado_transaccion }}</p>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <!-- Payment Methods Carousel -->
-    <div class="carousel-container">
-      <h2>Mis Métodos de Pago</h2>
-      <div class="carousel-content">
-        <div *ngFor="let metodo of tarjetas" class="carousel-item">
-          <h3>Tarjeta terminada en: {{ metodo.no_tarjeta.toString() | slice: -4 }}</h3>
-          <p>Fecha de expiración: {{ metodo.fecha_exp }}</p>
+    
+      <!-- Payment Methods Carousel -->
+      <div class="carousel-container">
+        <h2>Mis Métodos de Pago</h2>
+        <div class="carousel-content">
+          <div *ngFor="let metodo of tarjetas" class="carousel-item">
+            <h3>Tarjeta terminada en: {{ metodo.no_tarjeta.toString() | slice: -4 }}</h3>
+            <p>Fecha de expiración: {{ metodo.fecha_exp }}</p>
+          </div>
         </div>
       </div>
+    
+      <!-- Balance Display -->
+      <div class="user-balance">
+        <p>Tu saldo disponible es: <strong>${{ balance }}</strong></p>
+      </div>
+    
+      <!-- Recharge Form -->
+      <div class="actions">
+        <input type="number" [(ngModel)]="amount" placeholder="Monto a recargar" />
+        <button class="confirm-button" (click)="actualizarBalance(amount)">Recargar</button>
+      </div>
     </div>
-  
-    <!-- Balance Display -->
-    <div class="user-balance">
-      <p>Tu saldo disponible es: <strong>${{ balance }}</strong></p>
-    </div>
-  
-    <!-- Recharge Form -->
-    <div class="actions">
-      <input type="number" [(ngModel)]="amount" placeholder="Monto a recargar" />
-      <button class="confirm-button" (click)="actualizarBalance(amount)">Recargar</button>
-    </div>
-  </div>
-  
+    

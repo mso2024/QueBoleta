@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
+
 export class LoginComponent {
   email: string = '';
   password: string = '';
@@ -29,10 +30,6 @@ export class LoginComponent {
         }
       });
     }
-
-
-
-
   }
 
 

@@ -30,17 +30,29 @@ router.get('/getUserRecibos/:user_id', async (req, res) =>{
     }
 });
 
-router.get('/getUserTickets/:user_id', async (req, res) =>{
-    const {user_id} = req.params;
-    try{
-        const query = 'SELECT * FROM entradas WHERE id_cliente = ?';
-        const [results] = await db.execute(query,[user_id]);
+router.get('/getUserTickets/:user_id', async (req, res) => {
+    const { user_id } = req.params;
+    try {
+        const query = `
+            SELECT 
+                eventos.nombre AS event_nombre, 
+                eventos.descripcion AS event_descripcion, 
+                tipo_boletas.nombre AS ticket_nombre, 
+                entradas.fecha_compra 
+            FROM entradas 
+            JOIN tipo_boletas ON entradas.ticket_id = tipo_boletas.ticket_id 
+            JOIN fechas ON tipo_boletas.date_id = fechas.date_id 
+            JOIN eventos ON fechas.event_id = eventos.event_id 
+            WHERE entradas.id_cliente = ?`;
+        
+        const [results] = await db.execute(query, [user_id]);
         res.status(200).json(results);
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        res.status(500);
+        res.status(500).send('Error fetching tickets.');
     }
 });
+
 
 router.get('/getUserPaymentMethods/:user_id', async (req, res) =>{
     const {user_id} = req.params;
