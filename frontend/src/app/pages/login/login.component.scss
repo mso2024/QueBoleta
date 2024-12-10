@@ -1,56 +1,182 @@
 /* src/app/login/login.component.css */
+*, ::after, ::before {
+  box-sizing: border-box;
+}
 
-.login-container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    //margin: 100px;
-    padding: 20px;
-    background: linear-gradient(-1000deg,#800080,#ffd700);
-    border-radius: 8px;
-  }
-  
-  h2 {
-    
-    text-align: center;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  form div {
-    margin-bottom: 15px;
-    width: 50%;
-  }
-  
-  input {
-    padding: 8px;
-    width: 100%;
-    
-  }
-  
-  button {
-    padding: 10px;
-    background-color: gold;
-    color: black;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: purple;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 14px;
-    text-align: center;
-  }
-  
+body {
+background: linear-gradient(90deg, #4b0082, #ffd700); /* Fondo dorado con morado más oscuro */
+color: #fff;
+font-family: 'Arial', sans-serif; /* Tipografía minimalista */
+letter-spacing: 0.05em;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+}
+
+.form-container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background: linear-gradient(90deg, #4b0082, #ffd700); /* Fondo dorado con morado más oscuro */
+}
+
+.form {
+width: 400px; /* Aumentar el ancho del formulario */
+padding: 30px; /* Aumentar el padding del formulario */
+background: rgba(255, 215, 0, 0.8); /* Fondo del formulario con transparencia */
+border-radius: 12px; /* Aumentar el radio de borde */
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumentar la sombra */
+text-align: center;
+}
+
+h1 {
+font-size: 28px; /* Aumentar el tamaño del título */
+color: black; /* Cambiar el color del título a negro */
+font-weight: bold; /* Aplicar negrita */
+margin-bottom: 40px; /* Separar el título de los campos de entrada */
+text-align: center;
+}
+
+.form .control {
+margin: 0 0 30px; /* Aumentar el margen inferior de los controles */
+}
+
+.form .control input {
+width: 100%;
+padding: 16px 20px; /* Aumentar el padding de los inputs */
+border: 0;
+background: transparent;
+color: #fff;
+font-family: 'Arial', sans-serif; /* Tipografía minimalista */
+letter-spacing: 0.05em;
+font-size: 18px; /* Aumentar el tamaño de la fuente */
+}
+
+.form .control input:hover,
+.form .control input:focus {
+outline: none;
+border: 0;
+}
+
+.form .btn {
+width: 100%;
+display: block;
+padding: 16px 20px; /* Aumentar el padding del botón */
+background: transparent;
+outline: none;
+border: 0;
+color: #fff;
+letter-spacing: 0.1em;
+font-weight: bold;
+font-family: 'Arial', sans-serif; /* Tipografía minimalista */
+font-size: 18px; /* Aumentar el tamaño de la fuente */
+}
+
+.block-cube {
+position: relative;
+}
+
+.block-cube .bg-top {
+position: absolute;
+height: 12px; /* Aumentar la altura del borde superior */
+background: linear-gradient(90deg, #4b0082, #ffd700); /* Ajustar los colores del gradiente */
+bottom: 100%;
+left: 5px;
+right: -5px;
+transform: skew(-45deg, 0);
+margin: 0;
+}
+
+.block-cube .bg-top .bg-inner {
+bottom: 0;
+}
+
+.block-cube .bg {
+position: absolute;
+left: 0;
+top: 0;
+right: 0;
+bottom: 0;
+background: linear-gradient(90deg, #4b0082, #ffd700); /* Ajustar los colores del gradiente */
+}
+
+.block-cube .bg-right {
+position: absolute;
+background: #ffd700; /* Ajustar el color del borde derecho */
+top: -5px;
+z-index: 0;
+bottom: 5px;
+width: 12px; /* Aumentar el ancho del borde derecho */
+left: 100%;
+transform: skew(0, -45deg);
+}
+
+.block-cube .bg-right .bg-inner {
+left: 0;
+}
+
+.block-cube .bg .bg-inner {
+transition: all 0.2s ease-in-out;
+}
+
+.block-cube .bg-inner {
+background: #212121;
+position: absolute;
+left: 2px;
+top: 2px;
+right: 2px;
+bottom: 2px;
+}
+
+.block-cube .text {
+position: relative;
+z-index: 2;
+}
+
+.block-cube.block-input input {
+position: relative;
+z-index: 2;
+}
+
+.block-cube.block-input input:focus ~ .bg-right .bg-inner,
+.block-cube.block-input input:focus ~ .bg-top .bg-inner,
+.block-cube.block-input input:focus ~ .bg .bg-inner {
+top: 100%;
+background: rgba(255, 255, 255, 0.5);
+}
+
+.block-cube.block-input .bg-top,
+.block-cube.block-input .bg-right,
+.block-cube.block-input .bg {
+background: rgba(255, 255, 255, 0.5);
+transition: background 0.2s ease-in-out;
+}
+
+.block-cube.block-input .bg-right .bg-inner,
+.block-cube.block-input .bg-top .bg-inner {
+transition: all 0.2s ease-in-out;
+}
+
+.block-cube.block-input:focus .bg-top,
+.block-cube.block-input:focus .bg-right,
+.block-cube.block-input:focus .bg,
+.block-cube.block-input:hover .bg-top,
+.block-cube.block-input:hover .bg-right,
+.block-cube.block-input:hover .bg {
+background: rgba(255, 255, 255, 0.8);
+}
+
+.block-cube-hover:focus .bg .bg-inner,
+.block-cube-hover:hover .bg .bg-inner {
+top: 100%;
+}
+
+.error-message {
+color: red;
+font-size: 16px; /* Aumentar el tamaño de la fuente del mensaje de error */
+text-align: center;
+margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
+}
