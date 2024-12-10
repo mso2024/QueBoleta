@@ -1,1 +1,49 @@
 <app-user-dashboard></app-user-dashboard>
+
+<div class="dashboard-container">
+    <!-- Ingresos Totales -->
+    <section class="total-ingresos">
+      <h2>Total de Ingresos</h2>
+      <p *ngIf="ingresosTotales !== null; else loadingIngresos">
+        <strong>{{ ingresosTotales | currency:'USD' }}</strong>
+      </p>
+      <ng-template #loadingIngresos>
+        <p>Cargando ingresos totales...</p>
+      </ng-template>
+    </section>
+  
+    <!-- Ventas Totales -->
+    <section class="total-ventas">
+      <h2>Ventas Totales</h2>
+      <div *ngIf="ventasTotales.length > 0; else noVentas">
+        <ul>
+          <li *ngFor="let venta of ventasTotales">
+            Evento: <strong>{{ venta.eventonombre }}</strong> <br />
+            Entradas vendidas: <strong>{{ venta.entradastot }}</strong>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noVentas>
+        <p>No hay datos de ventas disponibles.</p>
+      </ng-template>
+    </section>
+  
+    <!-- Comentarios -->
+    <section class="comentarios">
+      <h2>Comentarios de tus Eventos</h2>
+      <div *ngIf="comentarios.length > 0; else noComentarios">
+        <div *ngFor="let comentario of comentarios" class="comentario-card">
+          <h3>{{ comentario.eventname }}</h3>
+          <p>
+            <strong>{{ comentario.nombrecomentador }}</strong>: <br />
+            "{{ comentario.contenidocomentario }}"
+          </p>
+          <p>Calificación: {{ comentario.calificacion }}/5</p>
+        </div>
+      </div>
+      <ng-template #noComentarios>
+        <p>No hay comentarios disponibles.</p>
+      </ng-template>
+    </section>
+  </div>
+  

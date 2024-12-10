@@ -55,7 +55,8 @@ router.get('/getEntradasTotales/:user_id', async (req, res) =>{
             JOIN eventos ON fechas.event_id = eventos.event_id 
             JOIN organizador_evento 
             ON eventos.event_id = organizador_evento.event_id
-            WHERE organizador_evento.user_id = ?`;
+            WHERE organizador_evento.user_id = ?
+            GROUP BY eventos.nombre`;
         const [results] = await db.execute(query,[user_id]);
         res.status(200);
     }catch(error){

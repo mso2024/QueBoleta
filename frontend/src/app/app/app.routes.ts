@@ -10,6 +10,7 @@ import { DateViewComponent } from '../pages/date-view/date-view.component';
 import { TicketViewComponent } from '../pages/ticket-view/ticket-view.component';
 import { CheckoutComponent } from '../pages/checkout/checkout.component';
 import { UserDashboardComponent } from '../pages/user-dashboard/user-dashboard.component';
+import { EventOrganizerDashboardComponent } from '../pages/event-organizer-dashboard/event-organizer-dashboard.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent }, 
   { path: 'about', component: AboutComponent },
@@ -20,5 +21,6 @@ export const appRoutes: Routes = [
   { path: 'events/:event_name', component: DateViewComponent},
   { path: 'tickets/:event_name/:date_id', component: TicketViewComponent},
   { path: 'checkout/:ticket_id/:user_id', component: CheckoutComponent},
-  { path: 'user-dashboard', component: UserDashboardComponent}
+  { path: 'user-dashboard', component: UserDashboardComponent},
+  { path: 'event-admin-dashboard', component: EventOrganizerDashboardComponent}
 ];

@@ -58,7 +58,6 @@ router.post('/:ticket_id/:user_id', async (req, res) => {
             return res.status(400).json({ message: 'Fondos insuficientes. Por favor recargue su cuenta.' });
         }
 
-        // Insertar entrada y actualizar balance
         const insertQuery = 'INSERT INTO entradas(ticket_id, id_cliente) VALUES (?, ?)';
         const [result] = await connection.execute(insertQuery, [ticket_id, user_id]);
 

@@ -24,7 +24,6 @@ interface Tiquete {
 }
 
 interface MetodoPago {
-  user_id: number;
   payment_method_id: number;
   no_tarjeta: number;
   fecha_exp: string;
@@ -37,6 +36,7 @@ interface MetodoPago {
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss'],
 })
+
 export class UserDashboardComponent implements OnInit {
   recibos: Recibo[] = [];
   tiquetes: Tiquete[] = [];
@@ -44,6 +44,15 @@ export class UserDashboardComponent implements OnInit {
   user_id: any;
   balance: number = 0;
   amount: number = 0;
+  selectedPaymentMethodId: number | null = null;
+
+  // Variables para el modal
+  newPaymentMethod: MetodoPago = {
+    payment_method_id: 0,
+    no_tarjeta: 0,
+    fecha_exp: ''
+  };
+  isModalOpen: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -69,13 +78,12 @@ export class UserDashboardComponent implements OnInit {
       .get<Tiquete[]>(`http://localhost:5000/api/usuarios/getUserTickets/${this.user_id}`)
       .subscribe(
         (data) => {
-          console.log('Fetched Tickets:', data); // Log the data
+          console.log('Fetched Tickets:', data);
           this.tiquetes = data;
         },
         (error) => console.error('Error fetching tiquetes: ', error)
       );
   }
-  
 
   fetchMetodosPago(): void {
     this.http
@@ -96,18 +104,54 @@ export class UserDashboardComponent implements OnInit {
   }
 
   actualizarBalance(monto: number): void {
-    const paymentMethodId = 1; // Hardcoded for example. You might need to select one from available methods.
+    if (!this.selectedPaymentMethodId) {
+      alert('Por favor selecciona un método de pago.');
+      return;
+    }
+
     this.http
       .post<any>(
-        `http://localhost:5000/api/usuarios/updateUserBalance/${this.user_id}/${monto}/${paymentMethodId}`,
+        `http://localhost:5000/api/usuarios/updateUserBalance/${this.user_id}/${monto}/${this.selectedPaymentMethodId}`,
         {}
       )
       .subscribe(
-        (data) => {
+        () => {
           console.log('Balance updated successfully');
-          this.fetchUserBalance(); // Refresh the balance
+          this.fetchUserBalance();
         },
         (error) => console.error('Error updating balance: ', error)
+      );
+  }
+
+  // Métodos del Modal
+  abrirModal(): void {
+    this.isModalOpen = true;
+  }
+
+  cerrarModal(): void {
+    this.isModalOpen = false;
+    this.newPaymentMethod = { payment_method_id: 0, no_tarjeta: 0, fecha_exp: '' }; // Limpiar campos
+  }
+
+  agregarMetodoPago(): void {
+    if (!this.newPaymentMethod.no_tarjeta || !this.newPaymentMethod.fecha_exp) {
+      alert('Por favor ingrese todos los campos.');
+      return;
+    }
+
+    this.http
+      .post<any>('http://localhost:5000/api/usuarios/addPaymentMethod', {
+        user_id: this.user_id,
+        no_tarjeta: this.newPaymentMethod.no_tarjeta,
+        fecha_exp: this.newPaymentMethod.fecha_exp,
+      })
+      .subscribe(
+        (data) => {
+          console.log('Método de pago agregado correctamente');
+          this.fetchMetodosPago(); // Actualizar lista de métodos de pago
+          this.cerrarModal(); // Cerrar el modal
+        },
+        (error) => console.error('Error agregando el método de pago: ', error)
       );
   }
 }
