@@ -1,115 +1,202 @@
 .dashboard-container {
-    background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151)); // Purple to blue gradient
-    padding: 30px 20px;
-    color: white;
-    text-align: center;
-  
+  background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151)); // Purple to blue gradient
+  padding: 30px 20px;
+  color: white;
+  text-align: center;
+
+  h2 {
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    font-size: 2.5rem;
+    color: #ffd700;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(123, 0, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
     h2 {
-      font-family: 'Trebuchet MS', Arial, sans-serif;
-      font-size: 2.5rem;
       color: #ffd700;
-      margin-bottom: 20px;
-      font-weight: bold;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+      font-size: 2rem;
+      margin-bottom: 15px;
     }
-  
-    section {
-      margin-bottom: 40px;
-      padding: 20px;
-      border-radius: 10px;
-      background: rgba(123, 0, 255, 0.8);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  
-      h2 {
-        color: #ffd700;
-        font-size: 2rem;
-        margin-bottom: 15px;
-      }
-  
-      p {
-        font-size: 1.2rem;
-        font-weight: bold;
-      }
-  
-      .card {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: 1px solid #ffd700;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 15px;
-        text-align: left;
-  
-        h3 {
-          font-size: 1.5rem;
-          color: #ffd700;
-        }
-  
-        p {
-          font-size: 1.2rem;
-          margin: 5px 0;
-        }
-      }
-    }
-  
-    .total-ingresos,
-    .total-ventas,
-    .comentarios {
-      .list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-  
-      .item {
-        background-color: rgba(123, 0, 255, 0.8);
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #ffd700;
-        text-align: left;
-  
-        h3 {
-          font-size: 1.4rem;
-          color: #ffd700;
-        }
-  
-        p {
-          font-size: 1.1rem;
-        }
-      }
-    }
-  
-    .loading-message {
+
+    p {
       font-size: 1.2rem;
       font-weight: bold;
-      color: #ffcc00;
     }
-  
-    .actions {
-      margin-top: 20px;
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      text-align: left;
+
+      h3 {
+        font-size: 1.5rem;
+        color: #ffd700;
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .total-ingresos,
+  .total-ventas,
+  .comentarios {
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .item {
+      background-color: rgba(123, 0, 255, 0.8);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ffd700;
+      text-align: left;
+
+      h3 {
+        font-size: 1.4rem;
+        color: #ffd700;
+      }
+
+      p {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .loading-message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffcc00;
+  }
+
+  .actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    button {
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+
+      &.confirm-button {
+        background-color: #32cd32;
+        color: white;
+
+        &:hover {
+          background-color: #28a428;
+        }
+      }
+
+      &.cancel-button {
+        background-color: #dc143c;
+        color: white;
+
+        &:hover {
+          background-color: #b01131;
+        }
+      }
+    }
+  }
+
+  /* NEW FORM STYLES */
+  .add-event-form,
+  .add-date-form,
+  .add-ticket-type-form {
+    background: rgba(123, 0, 255, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+
+    h3 {
+      font-size: 2rem;
+      color: #ffd700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      width: 100%;
+      margin-bottom: 20px;
+
+      label {
+        font-size: 1.1rem;
+        color: #ffd700;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 5px;
+        border: 1px solid #ffd700;
+        font-size: 1.1rem;
+        background: rgba(255, 255, 255, 0.3);
+        color: white;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+    }
+
+    .form-buttons {
       display: flex;
       justify-content: center;
       gap: 15px;
-  
+
       button {
-        font-size: 1.2rem;
         padding: 10px 20px;
+        font-size: 1.2rem;
         border-radius: 5px;
         border: none;
         cursor: pointer;
-  
-        &.confirm-button {
+
+        &.submit-button {
           background-color: #32cd32;
           color: white;
-  
+
           &:hover {
             background-color: #28a428;
           }
         }
-  
+
         &.cancel-button {
           background-color: #dc143c;
           color: white;
-  
+
           &:hover {
             background-color: #b01131;
           }
@@ -117,4 +204,61 @@
       }
     }
   }
-  
+
+  /* Specific Adjustments for Each Form */
+  .add-event-form {
+    background: rgba(123, 0, 255, 0.6);
+  }
+
+  .add-date-form {
+    background: rgba(0, 123, 255, 0.6);
+  }
+
+  .add-ticket-type-form {
+    background: rgba(0, 255, 123, 0.6);
+  }
+
+  /* Carrusel de Eventos */
+  .event-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 40px;
+
+    h2 {
+      font-size: 2rem;
+      color: #ffd700;
+      margin-bottom: 20px;
+    }
+
+    .event-card {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        color: #ffd700;
+      }
+    }
+
+    .event-card.selected {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  /* Formulario de Advertencia cuando no se ha seleccionado un evento */
+  .warning-message {
+    font-size: 1.1rem;
+    color: #dc143c;
+    margin-top: 10px;
+  }
+}

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduleEventComponent } from './schedule-event.component';
+import { AccesoNegadoComponent } from './acceso-negado.component';
 
-describe('ScheduleEventComponent', () => {
-  let component: ScheduleEventComponent;
-  let fixture: ComponentFixture<ScheduleEventComponent>;
+describe('AccesoNegadoComponent', () => {
+  let component: AccesoNegadoComponent;
+  let fixture: ComponentFixture<AccesoNegadoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScheduleEventComponent]
+      imports: [AccesoNegadoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ScheduleEventComponent);
+    fixture = TestBed.createComponent(AccesoNegadoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

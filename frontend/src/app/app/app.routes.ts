@@ -3,7 +3,6 @@ import { HomeComponent } from '../pages/home/home.component'; // Adjust based on
 import { AboutComponent } from '../pages/about/about.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
-import { ScheduleEventComponent } from '../components/schedule-event/schedule-event.component';
 import { CategoriesComponent } from '../pages/categories/categories.component';
 import { EventViewComponent } from '../pages/event-view/event-view.component';
 import { DateViewComponent } from '../pages/date-view/date-view.component';

@@ -3,8 +3,6 @@ const router = express.Router();
 const db = require('../db/connection'); 
 const jwt = require('jsonwebtoken');
 const verifyRole = require('../middlewares/verifyRole');
-const { server } = require('typescript');
-
 router.get('/top_sale_ranks', async(req, res) =>{
     try{
         const query = 'SELECT eventos.nombre, (SELECT COUNT(*) FROM entradas JOIN tipo_boletas ON entradas.ticket_id = tipo_boletas.ticket_id WHERE tipo_boletas.date_id IN(SELECT fechas.date_id FROM fechas WHERE fechas.event_id = eventos.event_id)) AS boletas_vendidas FROM eventos ORDER BY boletas_vendidas DESC';   
@@ -17,7 +15,7 @@ router.get('/top_sale_ranks', async(req, res) =>{
     }
 });
 
-router.get('/getComentarios/:user_id', async (req, res) =>{
+router.get('/getComentarios/:user_id', verifyRole('Organizador'), async (req, res) =>{
     const { user_id } = req.params;
     try{
         const query = `
@@ -35,15 +33,13 @@ router.get('/getComentarios/:user_id', async (req, res) =>{
                 ON comentarios_calificaciones.user_id = usuarios.user_id WHERE organizador_evento.user_id = ?`;
         const [results] = await db.execute(query,[user_id]);
         res.status(200);
-
-
     }catch(error){
         console.error(error);
         res.status(500);
     }
 });
 
-router.get('/getEntradasTotales/:user_id', async (req, res) =>{
+router.get('/getEntradasTotales/:user_id', verifyRole('Organizador'), async (req, res) =>{
     const {user_id} = req.params;
     try{
         const query = `
@@ -65,7 +61,7 @@ router.get('/getEntradasTotales/:user_id', async (req, res) =>{
     }
 });
 
-router.get('/getIngresosTotales/:user_id', async (req, res) =>{
+router.get('/getIngresosTotales/:user_id', verifyRole('Organizador'), async (req, res) =>{
     const {user_id} = req.params;
     try{
         const query = `

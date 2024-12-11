@@ -35,8 +35,6 @@ router.get('/tickets/:event_name/:date_id', async (req, res) => {
   }
 });
 
-
-
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -50,30 +48,88 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/schedule', verifyRole('Organizador'), async (req, res) => {
-  const { nombre, descripcion, fecha_inicio, fecha_fin, ubicacion, capacidad } = req.body;
+router.post('/addTicketType/:date_id', verifyRole('Organizador'), async (req, res) => {
+  const { date_id } = req.params;
+  const { nombre, descripcion, precio } = req.body;
 
-  if (!nombre || !descripcion || !fecha_inicio || !fecha_fin || !ubicacion || !capacidad) {
-    return res.status(400).json({ error: 'All fields are required' });
+  if (!nombre || !descripcion || !precio) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios: nombre, descripcion, precio' });
   }
 
   try {
-    const [result] = await db.query(
-      'INSERT INTO eventos (nombre, descripcion) VALUES (?, ?)',
-      [nombre, descripcion]
-    );
-    
-    const event_id = result.insertId;
-
-    await db.query(
-      'INSERT INTO fechas (event_id, fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion) VALUES (?, ?, ?, ?, ?)',
-      [event_id, fecha_inicio, fecha_fin, capacidad, ubicacion]
-    );
-
-    res.status(201).json({ message: 'Event scheduled successfully', event_id });
+      const query = `
+          INSERT INTO tipo_boletas (date_id, nombre, descripcion, precio)
+          VALUES (?, ?, ?, ?)
+      `;
+      const [result] = await db.execute(query, [date_id, nombre, descripcion, precio]);
+      res.status(201).json({ message: 'Tipo de boleto agregado exitosamente', ticket_id: result.insertId });
   } catch (error) {
-    console.error('Error scheduling event:', error);
-    res.status(500).json({ error: 'Internal server error' });
+      console.error('Error al agregar tipo de boleto:', error);
+      res.status(500).json({ error: 'Error al agregar tipo de boleto' });
+  }
+});
+
+router.post('/addEvent', verifyRole('Organizador'), async (req, res) => {
+  const { nombre, descripcion, userId } = req.body; // Ahora el userId se recibe en el cuerpo de la solicitud.
+
+  if (!nombre || !descripcion || !userId) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios: nombre, descripcion y userId' });
+  }
+
+  try {
+    // 1. Crear el evento
+    const query = 'INSERT INTO eventos (nombre, descripcion) VALUES (?, ?)';
+    const [result] = await db.execute(query, [nombre, descripcion]);
+
+    // 2. Crear la relación en la tabla organizador_evento
+    const eventId = result.insertId;
+    const insertOrganizerQuery = 'INSERT INTO organizador_evento (user_id, event_id) VALUES (?, ?)';
+    await db.execute(insertOrganizerQuery, [userId, eventId]);
+
+    res.status(201).json({ message: 'Evento agregado y asociado correctamente', event_id: eventId });
+  } catch (error) {
+    console.error('Error al agregar evento:', error);
+    res.status(500).json({ error: 'Error al agregar evento' });
+  }
+});
+
+router.get('/getTicketTypesbyEventName/:nombre', async (req, res) =>{
+  const { nombre } = req.params;
+  try{
+    const query = `
+    SELECT eventos.nombre AS nombre_ev, tipo_boletas.descripcion AS descripcion, tipo_boletas.nombre AS nombre, tipo_boletas.precio AS precio
+    FROM tipo_boletas JOIN fechas 
+    ON tipo_boletas.date_id = fechas.date_id
+    JOIN eventos 
+    ON fechas.event_id = eventos.event_id
+    WHERE eventos.nombre = ?`;
+    const [results] = await db.execute(query,[nombre]);
+    res.status(200).json(results);
+
+  }catch(error){
+    console.error(error);
+    res.status(500);
+  }
+});
+
+router.post('/addEventDate/:event_id', verifyRole('Organizador'), async (req, res) => {
+  const { event_id } = req.params;
+  const { fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion } = req.body;
+
+  if (!fecha_hora_inicio || !fecha_hora_fin || !capacidad || !ubicacion) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios: fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion' });
+  }
+
+  try {
+      const query = `
+          INSERT INTO fechas (event_id, fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion)
+          VALUES (?, ?, ?, ?, ?)
+      `;
+      const [result] = await db.execute(query, [event_id, fecha_hora_inicio, fecha_hora_fin, capacidad, ubicacion]);
+      res.status(201).json({ message: 'Fecha de evento agregada exitosamente', date_id: result.insertId });
+  } catch (error) {
+      console.error('Error al agregar fecha de evento:', error);
+      res.status(500).json({ error: 'Error al agregar fecha de evento' });
   }
 });
 

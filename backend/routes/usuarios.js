@@ -10,8 +10,6 @@ router.get('/getUserFunds/:user_id', async (req, res) => {
         const query = 'SELECT balance FROM usuarios WHERE user_id = ?';
         const [results] = await db.execute(query,[user_id]);
         res.status(200).json(results);
-
-
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Error'});
@@ -96,6 +94,17 @@ router.post('/updateUserBalance/:user_id/:am/:pm', async (req, res) => {
 });
 
 
+router.get('/getUserEvents/:user_id', async (req, res) =>{
+    const {user_id} = req.params;
+    try{
+        const query = 'SELECT eventos.event_id AS eventid, eventos.nombre AS nombre FROM eventos JOIN organizador_evento ON eventos.event_id = organizador_evento.event_id WHERE user_id = ?';
+        const [results] = await db.execute(query,[user_id]);
+        res.status(200).json(results);
+    }catch(error){
+        console.error(error);
+        res.status(500);
+    }
+});
 
 router.post('/addPaymentMethod', async (req, res) => {
     const { user_id, no_tarjeta, fecha_exp } = req.body;
@@ -121,7 +130,6 @@ router.post('/addPaymentMethod', async (req, res) => {
         res.status(500).json({ error: 'Error al agregar método de pago' });
     }
 });
-
 
 router.get('/getUserPaymentMethods/:user_id', async (req, res) => {
     const { user_id } = req.params;

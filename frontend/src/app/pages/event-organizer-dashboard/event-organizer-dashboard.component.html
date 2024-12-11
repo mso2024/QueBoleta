@@ -1,49 +1,206 @@
 <app-user-dashboard></app-user-dashboard>
 
 <div class="dashboard-container">
-    <!-- Ingresos Totales -->
-    <section class="total-ingresos">
-      <h2>Total de Ingresos</h2>
-      <p *ngIf="ingresosTotales !== null; else loadingIngresos">
-        <strong>{{ ingresosTotales | currency:'USD' }}</strong>
-      </p>
-      <ng-template #loadingIngresos>
-        <p>Cargando ingresos totales...</p>
-      </ng-template>
-    </section>
-  
-    <!-- Ventas Totales -->
-    <section class="total-ventas">
-      <h2>Ventas Totales</h2>
-      <div *ngIf="ventasTotales.length > 0; else noVentas">
-        <ul>
-          <li *ngFor="let venta of ventasTotales">
-            Evento: <strong>{{ venta.eventonombre }}</strong> <br />
-            Entradas vendidas: <strong>{{ venta.entradastot }}</strong>
-          </li>
-        </ul>
+  <!-- Ingresos Totales -->
+  <section class="total-ingresos">
+    <h2>Total de Ingresos</h2>
+    <p *ngIf="ingresosTotales !== null; else loadingIngresos">
+      <strong>{{ ingresosTotales | currency:'USD' }}</strong>
+    </p>
+    <ng-template #loadingIngresos>
+      <p>Cargando ingresos totales...</p>
+    </ng-template>
+  </section>
+
+  <!-- Ventas Totales -->
+  <section class="total-ventas">
+    <h2>Ventas Totales</h2>
+    <div *ngIf="ventasTotales.length > 0; else noVentas">
+      <ul>
+        <li *ngFor="let venta of ventasTotales">
+          Evento: <strong>{{ venta.eventonombre }}</strong> <br />
+          Entradas vendidas: <strong>{{ venta.entradastot }}</strong>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noVentas>
+      <p>No hay datos de ventas disponibles.</p>
+    </ng-template>
+  </section>
+
+  <!-- Comentarios -->
+  <section class="comentarios">
+    <h2>Comentarios de tus Eventos</h2>
+    <div *ngIf="comentarios.length > 0; else noComentarios">
+      <div *ngFor="let comentario of comentarios" class="comentario-card">
+        <h3>{{ comentario.eventname }}</h3>
+        <p>
+          <strong>{{ comentario.nombrecomentador }}</strong>: <br />
+          "{{ comentario.contenidocomentario }}"
+        </p>
+        <p>Calificación: {{ comentario.calificacion }}/5</p>
       </div>
-      <ng-template #noVentas>
-        <p>No hay datos de ventas disponibles.</p>
-      </ng-template>
-    </section>
-  
-    <!-- Comentarios -->
-    <section class="comentarios">
-      <h2>Comentarios de tus Eventos</h2>
-      <div *ngIf="comentarios.length > 0; else noComentarios">
-        <div *ngFor="let comentario of comentarios" class="comentario-card">
-          <h3>{{ comentario.eventname }}</h3>
-          <p>
-            <strong>{{ comentario.nombrecomentador }}</strong>: <br />
-            "{{ comentario.contenidocomentario }}"
-          </p>
-          <p>Calificación: {{ comentario.calificacion }}/5</p>
-        </div>
+    </div>
+    <ng-template #noComentarios>
+      <p>No hay comentarios disponibles.</p>
+    </ng-template>
+  </section>
+
+  <!-- Carrusel de Eventos -->
+  <section class="event-carousel">
+    <h2>Tus eventos</h2>
+    <div *ngFor="let evento of eventos">
+      <div class="event-card">
+        <h3>Nombre: {{ evento.nombre }}</h3>
+        <h3>ID: {{evento.eventid}}</h3>
       </div>
-      <ng-template #noComentarios>
-        <p>No hay comentarios disponibles.</p>
-      </ng-template>
-    </section>
+    </div>
+  </section>
+
+  <!-- Formulario para Agregar Evento -->
+  <div class="add-event-form">
+    <h3>Agregar Evento</h3>
+    <form (ngSubmit)="addEvent()">
+      <label for="eventName">Nombre del Evento</label>
+      <input
+        type="text"
+        id="eventName"
+        [(ngModel)]="event.nombre"
+        name="nombre"
+        required
+      />
+
+      <label for="eventDescription">Descripción</label>
+      <textarea
+        id="eventDescription"
+        [(ngModel)]="event.descripcion"
+        name="descripcion"
+        required
+      ></textarea>
+
+      <button type="submit">Agregar Evento</button>
+    </form>
   </div>
-  
+
+  <!-- Formulario para Agregar Fecha al Evento -->
+  <div class="add-date-form">
+    <h3>Agregar Fecha al Evento</h3>
+    <form (ngSubmit)="addEventDate()">
+      <label for="eventId">ID del Evento</label>
+      <input
+        type="number"
+        id="eventId"
+        [(ngModel)]="date.event_id"
+        name="event_id"
+        required
+      />
+
+      <label for="eventDate">Fecha y Hora de Inicio</label>
+      <input
+        type="datetime-local"
+        id="eventDate"
+        [(ngModel)]="date.fecha_hora_inicio"
+        name="fecha_hora_inicio"
+        required
+      />
+
+      <label for="eventEndDate">Fecha y Hora de Fin</label>
+      <input
+        type="datetime-local"
+        id="eventEndDate"
+        [(ngModel)]="date.fecha_hora_fin"
+        name="fecha_hora_fin"
+        required
+      />
+
+      <label for="eventLocation">Ubicación</label>
+      <input
+        type="text"
+        id="eventLocation"
+        [(ngModel)]="date.ubicacion"
+        name="ubicacion"
+        required
+      />
+
+      <label for="eventCapacity">Capacidad</label>
+      <input
+        type="number"
+        id="eventCapacity"
+        [(ngModel)]="date.capacidad"
+        name="capacidad"
+        required
+      />
+
+      <button type="submit">
+        Agregar Fecha
+      </button>
+    </form>
+  </div>
+
+  <!-- Formulario para Buscar Evento -->
+  <section class="search-event-form">
+    <h3>Buscar Evento para Ver Boletas</h3>
+    <form (ngSubmit)="fetchBoletas()">
+      <label for="searchEventName">Nombre del Evento</label>
+      <input
+        type="text"
+        id="searchEventName"
+        [(ngModel)]="search_event_name"
+        name="search_event_name"
+        required
+      />
+
+      <button type="submit" [disabled]="!search_event_name">Buscar Boletas</button>
+    </form>
+  </section>
+
+  <!-- Resultados de la búsqueda de boletas -->
+  <section class="boleta-results" *ngIf="boletas.length > 0; else noBoletas">
+    <h3>Tipos de Boletas para el Evento</h3>
+    <ul>
+      <li *ngFor="let boleta of boletas">
+        <strong>{{ boleta.nombre_ev }}</strong> - {{ boleta.descripcion }} <br />
+        Precio: <strong>{{ boleta.precio | currency:'USD' }}</strong>
+      </li>
+    </ul>
+  </section>
+
+  <ng-template #noBoletas>
+    <p>No se encontraron boletas para este evento.</p>
+  </ng-template>
+
+  <!-- Formulario para Buscar Fechas de un Evento -->
+  <section class="search-dates-form">
+    <h3>Buscar Fechas de Evento</h3>
+    <form (ngSubmit)="fetchEventDates()">
+      <label for="searchEventDateName">Nombre del Evento</label>
+      <input
+        type="text"
+        id="searchEventDateName"
+        [(ngModel)]="search_event_name"
+        name="search_event_name"
+        required
+      />
+
+      <button type="submit" [disabled]="!search_event_name">Buscar Fechas</button>
+    </form>
+  </section>
+
+  <!-- Sección de Fechas de Eventos -->
+  <section class="event-dates">
+    <h2>Fechas de Eventos</h2>
+    <div *ngIf="eventDates.length > 0; else noEventDates">
+      <ul>
+        <li *ngFor="let eventDate of eventDates">
+          Fecha Inicio: <strong>{{ eventDate.fecha_hora_inicio | date:'medium' }}</strong> <br />
+          Fecha Fin: <strong>{{ eventDate.fecha_hora_fin | date:'medium' }}</strong> <br />
+          Ubicación: <strong>{{ eventDate.ubicacion }}</strong> <br />
+          Capacidad: <strong>{{ eventDate.capacidad }}</strong>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noEventDates>
+      <p>No se encontraron fechas para este evento.</p>
+    </ng-template>
+  </section>
+</div>
