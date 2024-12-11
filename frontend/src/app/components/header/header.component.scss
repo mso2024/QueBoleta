@@ -5,14 +5,26 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añadir sombra para separar del contenido */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Hacer que el logo ocupe el espacio central */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
 }
 
 .logo-container img {
-  width: 100px;
+  width: 120px; /* Aumentar el tamaño del logo */
   padding: 5px;
   border-radius: 50%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-  display: inline-block;
 }
 
 .nav-buttons {
@@ -29,12 +41,13 @@ header {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease, transform 0.3s ease;
+  border-radius: 20px; /* Botones más redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra externa e interna */
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-button:hover {
   background-color: rgb(6, 0, 128); /* Darker purple on hover */
   transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.7); /* Aumentar la sombra interna en hover */
 }
