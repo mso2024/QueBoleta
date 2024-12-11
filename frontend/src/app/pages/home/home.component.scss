@@ -47,3 +47,21 @@ header {
   background-color: #ffd700; /* Purple on hover */
   transform: scale(1.05);
 }
+
+main {
+  background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151));
+  color: white;
+  padding: 2rem;
+  min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la ventana */
+}
+
+.search-bar {
+  margin-top: 2rem;
+  input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+}

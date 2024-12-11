@@ -10,4 +10,14 @@ import { CommonModule } from '@angular/common';
 })
 export class CarouselComponent {
   @Input() events: any[] = []; // Receive events dynamically as input
+
+  scrollLeft() {
+    const carousel = document.querySelector('.carousel-content') as HTMLElement;
+    carousel.scrollBy({ left: -300, behavior: 'smooth' });
+  }
+
+  scrollRight() {
+    const carousel = document.querySelector('.carousel-content') as HTMLElement;
+    carousel.scrollBy({ left: 300, behavior: 'smooth' });
+  }
 }

@@ -1,8 +1,10 @@
 <div class="carousel-container">
   <h1>Eventos más populares:</h1>
+  <button class="carousel-arrow carousel-arrow-left" (click)="scrollLeft()">&#10094;</button>
   <div class="carousel-content">
     <div *ngFor="let event of events" class="carousel-item">
       <h2>{{ event.nombre }}</h2>
     </div>
   </div>
+  <button class="carousel-arrow carousel-arrow-right" (click)="scrollRight()">&#10095;</button>
 </div>

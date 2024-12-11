@@ -1,28 +1,44 @@
-main{
-  
-    display: grid;
-    background: linear-gradient(-1000deg,#800080,rgb(0, 0, 151));
-    grid-template-columns: repeat(3, 1fr); 
-    grid-gap: 16px; 
-    padding: 16px; 
-    div {
-        border: 1px solid #7b00ff; 
-        padding: 16px; 
-        text-align: center; 
-        border-radius: 5%;
-      }
-    div img{
-        border-radius: 5%;
-    }
-      h2 {
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 1.5rem; 
-        color: #000000; 
-        margin-bottom: 8px; 
-        text-transform: uppercase;
-        text-decoration: none !important;
-      }
-}
+main {
+  display: grid;
+  background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151));
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+  padding: 16px;
+  min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la ventana */
 
+  .img-container {
+    border: 1px solid #7b00ff;
+    padding: 16px;
+    text-align: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.2); /* Cambia el fondo al pasar el ratón */
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      border-radius: 10px;
+      width: 100%;
+      height: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-size: 1.5rem;
+      color: #ffffff; /* Color del texto */
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+  }
+}
 
 

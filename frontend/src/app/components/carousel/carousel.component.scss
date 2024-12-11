@@ -1,40 +1,66 @@
 .carousel-container {
-  position: relative; /* Maintain relative positioning for the header and content */
+  position: relative;
   display: flex;
-  flex-direction: column; /* Stack header and carousel */
-  gap: 2rem; /* Add space between the header and the carousel */
+  flex-direction: column;
+  gap: 2rem;
   padding: 2rem 5rem;
   background: linear-gradient(-1000deg, #800080, rgb(0, 0, 151));
 
   h1 {
     margin: 0;
     font-size: 2rem;
-    color: #fff; /* Make header visible */
+    color: #fff;
     text-align: center;
   }
 
   .carousel-content {
     display: flex;
-    overflow-x: auto;
+    overflow: hidden;
     scroll-snap-type: x mandatory;
-    gap: 5rem; /* Space between carousel items */
+    gap: 5rem;
     padding: 2rem 0;
   }
-}
 
-.carousel-item {
-  flex: 0 0 auto;
-  width: 300px;
-  padding: 1rem;
-  background: brown; /* Gold background */
-  color: #000;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  scroll-snap-align: start;
-  text-align: center;
+  .carousel-item {
+    flex: 0 0 auto;
+    width: 300px;
+    padding: 1rem;
+    background: brown;
+    color: #000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    scroll-snap-align: start;
+    text-align: center;
 
-  h2 {
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
+    h2 {
+      margin: 0.5rem 0;
+      font-size: 1.5rem;
+    }
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .carousel-arrow:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  .carousel-arrow-left {
+    left: 1rem;
+  }
+
+  .carousel-arrow-right {
+    right: 1rem;
   }
 }
