@@ -27,57 +27,73 @@ router.post('/:ticket_id/:user_id', async (req, res) => {
         return res.status(400).json({ message: 'Parámetros inválidos.' });
     }
 
-    const connection = await db.getConnection(); // Conexión manual para manejar transacciones
     try {
-        await connection.beginTransaction();
-
         // Verificar boleta
-        const [tiquete] = await connection.execute(
-            'SELECT precio FROM tipo_boletas WHERE ticket_id = ?',
+        const [tiquete] = await db.execute(
+            'SELECT precio, date_id FROM tipo_boletas WHERE ticket_id = ?',
             [ticket_id]
         );
         if (tiquete.length === 0) {
-            await connection.rollback();
             return res.status(404).json({ message: 'Boleta no encontrada.' });
         }
         const precio = tiquete[0].precio;
+        const date_id = tiquete[0].date_id;
+
+        // Obtener el event_id asociado con el date_id
+        const [fecha] = await db.execute(
+            'SELECT event_id FROM fechas WHERE date_id = ?',
+            [date_id]
+        );
+        if (fecha.length === 0) {
+            return res.status(404).json({ message: 'Evento no encontrado.' });
+        }
+        const event_id = fecha[0].event_id;
 
         // Verificar usuario y saldo
-        const [usuario] = await connection.execute(
+        const [usuario] = await db.execute(
             'SELECT balance FROM usuarios WHERE user_id = ?',
             [user_id]
         );
         if (usuario.length === 0) {
-            await connection.rollback();
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
         const balance_usuario = usuario[0].balance;
 
         if (balance_usuario < precio) {
-            await connection.rollback();
             return res.status(400).json({ message: 'Fondos insuficientes. Por favor recargue su cuenta.' });
         }
 
+        // Obtener el organizador del evento
+        const [organizador] = await db.execute(
+            'SELECT user_id FROM organizador_evento WHERE event_id = ?',
+            [event_id]
+        );
+        if (organizador.length === 0) {
+            return res.status(404).json({ message: 'No se encontró un organizador para este evento.' });
+        }
+        const organizador_id = organizador[0].user_id;
+
+        // Insertar la compra de la boleta
         const insertQuery = 'INSERT INTO entradas(ticket_id, id_cliente) VALUES (?, ?)';
-        const [result] = await connection.execute(insertQuery, [ticket_id, user_id]);
+        const [result] = await db.execute(insertQuery, [ticket_id, user_id]);
 
         if (result.affectedRows === 0) {
-            await connection.rollback();
             return res.status(500).json({ message: 'Error al procesar la compra.' });
         }
 
-        const updateQuery = 'UPDATE usuarios SET balance = balance - ? WHERE user_id = ?';
-        await connection.execute(updateQuery, [precio, user_id]);
+        // Actualizar balances: restar al comprador y agregar al organizador
+        const updateUsuarioQuery = 'UPDATE usuarios SET balance = balance - ? WHERE user_id = ?';
+        await db.execute(updateUsuarioQuery, [precio, user_id]);
 
-        await connection.commit();
+        const updateOrganizadorQuery = 'UPDATE usuarios SET balance = balance + ? WHERE user_id = ?';
+        await db.execute(updateOrganizadorQuery, [precio, organizador_id]);
+
         res.status(200).json({ message: 'Compra exitosa.' });
     } catch (error) {
-        await connection.rollback();
         console.error(error);
         res.status(500).json({ message: 'Error durante la transacción.' });
-    } finally {
-        connection.release();
     }
 });
+
 
 module.exports = router;

@@ -19,6 +19,35 @@ router.get('/categories/:cat_name', async (req, res) =>{
 
 });
 
+router.get('/eventDates/:event_name', async (req, res) => {
+  const { event_name } = req.params;
+  try {
+    // Consultamos todas las fechas de un evento por su nombre
+    const query = `
+      SELECT 
+        fechas.fecha_hora_inicio, 
+        fechas.fecha_hora_fin, 
+        fechas.capacidad, 
+        fechas.ubicacion, 
+        fechas.date_id
+      FROM eventos
+      JOIN fechas ON eventos.event_id = fechas.event_id
+      WHERE eventos.nombre = ?`;
+
+    const [results] = await db.execute(query, [event_name]);
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No dates found for the specified event.' });
+    }
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error fetching event dates:', error);
+    res.status(500).json({ message: 'Internal server error while fetching event dates.' });
+  }
+});
+
+
 router.get('/tickets/:event_name/:date_id', async (req, res) => {
   const { event_name, date_id } = req.params;
   try {
@@ -168,5 +197,41 @@ router.get('/events/:event_name', async (req, res) => {
     res.status(500).json({ message: 'Internal server error while fetching event dates.' });
   }
 });
+
+router.put('/modificarEvento/:event_id', verifyRole('Organizador'), async (req, res) => {
+  const { event_id } = req.params;
+  const { nombre, descripcion } = req.body;
+
+  const connection = await db.getConnection();
+  try {
+      const updateQuery = 'UPDATE eventos SET nombre = ?, descripcion = ? WHERE event_id = ?';
+      await connection.execute(updateQuery, [nombre, descripcion, event_id]);
+      res.status(200).json({ message: 'Evento modificado exitosamente.' });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al modificar el evento.' });
+  } finally {
+      connection.release();
+  }
+});
+
+router.delete('/eliminarEvento/:event_id', verifyRole('Organizador'), async (req, res) => {
+  const { event_id } = req.params;
+
+  const connection = await db.getConnection();
+  try {
+      const deleteQuery = 'DELETE FROM eventos WHERE event_id = ?';
+      await connection.execute(deleteQuery, [event_id]);
+
+      res.status(200).json({ message: 'Evento eliminado exitosamente.' });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al eliminar el evento.' });
+  } finally {
+      connection.release();
+  }
+});
+
+
 
 module.exports = router;

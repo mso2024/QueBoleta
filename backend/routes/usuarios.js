@@ -52,18 +52,7 @@ router.get('/getUserTickets/:user_id', async (req, res) => {
 });
 
 
-router.get('/getUserPaymentMethods/:user_id', async (req, res) =>{
-    const {user_id} = req.params;
-    
-    try{
-        const query = 'SELECT * FROM metodos_pago WHERE user_id = ?';
-        const [results] = await db.execute(query,[user_id]);
-        res.status(200).json(results);
-    }catch(error){
-        console.error(error);
-        res.status(500);
-    }
-});
+
 
 router.post('/updateUserBalance/:user_id/:am/:pm', async (req, res) => {
     const { user_id, am, pm } = req.params;
